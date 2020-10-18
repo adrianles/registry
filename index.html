@@ -11,16 +11,25 @@
   <body>
     <div id="view-registries" class="container view">
         <h1 data-r-i18n>Registries</h1>
+        <div class="container">
+            <div class="form-group row">
+                <div class="col-auto"><label for="insertRegistryInput">New registry</label></div>
+                <div class="col-auto"><input id="insertRegistryInput" class="form-control" type="text" /></div>
+                <div class="col-auto"><button id="insertRegistryButton" class="btn btn-primary">Add</button></div>
+            </div>
+        </div>
         <table class="table table-bordered table-hover">
-            <tr>
-                <th scope="col" data-r-i18n>ID</th>
-                <th scope="col" data-r-i18n>Name</th>
-                <th scope="col" data-r-i18n>Creation</th>
-                <th scope="col" data-r-i18n>Last modified</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th scope="col" data-r-i18n>ID</th>
+                    <th scope="col" data-r-i18n>Name</th>
+                    <th scope="col" data-r-i18n>Creation</th>
+                    <th scope="col" data-r-i18n>Last modified</th>
+                </tr>
+            </thead>
+            <tbody id="data-registries">
+            </tbody>
         </table>
-        <tbody id="data-registries">
-        </tbody>
     </div>
 
     <!-- You can also require other files to run in this process -->
