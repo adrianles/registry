@@ -9,9 +9,12 @@ function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
     }
   })
+  mainWindow.setMenu(null)
+  mainWindow.maximize()
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
