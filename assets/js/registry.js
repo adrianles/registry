@@ -5,8 +5,14 @@ import {
     insertRow as dbInsertRow
 } from './database.js';
 import { transitionTo as transitionToView } from './view-transition.js';
+import { showView as showRegistriesView } from './registries.js';
 
 const viewId = 'view-registry';
+
+var registriesMenuItem = document.getElementById(viewId).querySelector('.menu-item[data-r-target="registries"]');
+registriesMenuItem.addEventListener('click', function (event) {
+    showRegistriesView();
+});
 
 var tbody = document.getElementById('data-rows');
 var button = document.getElementById('insertRowButton');
@@ -21,7 +27,7 @@ button.addEventListener('click', function (event) {
         quantity: quantityInput.value,
         amount: amountInput.value
     }
-    //TODO: validation
+    //TODO: validation for quantity and amount
     dbInsertRow(row).then(function (rowId) {
         reloadTable();
         productInput.value = null;

@@ -4,14 +4,16 @@ import {
     getRegistries as dbGetRegistries,
     insertRegistry as dbInsertRegistry
 } from './database.js';
+import { transitionTo as transitionToView } from './view-transition.js';
 import { showView as showRegistryView } from './registry.js';
+
+const viewId = 'view-registries';
 
 var tbody = document.getElementById('data-registries');
 var button = document.getElementById('insertRegistryButton');
 var input = document.getElementById('insertRegistryInput');
 button.addEventListener('click', function (event) {
     var name = input.value;
-    //TODO: validation
     dbInsertRegistry(input.value).then(function (registryId) {
         reloadTable();
         input.value = null;
@@ -56,4 +58,12 @@ var onTableRowClickEvent = function (event, registryId)
     showRegistryView(registryId);
 };
 
-reloadTable();
+var showView = function ()
+{
+    reloadTable();
+    transitionToView(viewId);
+};
+
+export {
+    showView
+};

@@ -9,7 +9,12 @@
         <title data-r-i18n>Registries</title>
     </head>
     <body>
-        <div id="view-registries" class="container view active-view">
+        <div id="view-loading" class="container view active-view"></div>
+        <div id="view-registries" class="container view">
+            <div class="menu">
+                <span class="menu-item current-location" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-separator"> ></span>
+            </div>
             <h1 data-r-i18n>Registries</h1>
             <div class="container">
                 <div class="form-group row">
@@ -33,6 +38,12 @@
         </div>
 
         <div id="view-registry" class="container view">
+            <div class="menu">
+                <span class="menu-item" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-separator"> > </span>
+                <span class="menu-item current-location" data-r-target="registry" data-r-i18n>Registry</span>
+                <span class="menu-separator"> ></span>
+            </div>
             <h1 data-r-i18n>Registry</h1>
             <div class="container row">
                 <div class="col-auto"><span data-r-i18n>New row</span></div>
@@ -77,6 +88,5 @@
         <!-- You can also require other files to run in this process -->
         <script src="./renderer.js"></script>
         <script type="module" src="./assets/js/main.js"></script>
-        <script type="module" src="./assets/js/registries.js"></script>
     </body>
 </html>
