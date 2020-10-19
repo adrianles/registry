@@ -4,12 +4,14 @@ import {
     getRegistries as dbGetRegistries,
     insertRegistry as dbInsertRegistry
 } from './database.js';
+import { showView as showRegistryView } from './registry.js';
 
 var tbody = document.getElementById('data-registries');
 var button = document.getElementById('insertRegistryButton');
 var input = document.getElementById('insertRegistryInput');
 button.addEventListener('click', function (event) {
     var name = input.value;
+    //TODO: validation
     dbInsertRegistry(input.value).then(function (registryId) {
         reloadTable();
         input.value = null;
@@ -51,8 +53,7 @@ var createTableRow = function (registry)
 
 var onTableRowClickEvent = function (event, registryId)
 {
-    //TODO:
-    console.log('tr with id ' + registryId + ' was clicked!');
+    showRegistryView(registryId);
 };
 
 reloadTable();

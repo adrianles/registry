@@ -43,11 +43,30 @@ var getRegistries = function (isAsc)
     );
 };
 
+var getRegistryRows = function (registryId, isAsc)
+{
+    var order = isAsc ? 'ASC' : 'DESC';
+    return _allQuery(
+        "SELECT id, registry_id AS registryId, product, quantity, amount, DATETIME(creation_date, 'localtime') as creationDate FROM row WHERE registry_id = $registryId ORDER BY creation_date " + order,
+        {$registryId: registryId}
+    );
+};
+
 var insertRegistry = function (name)
 {
     return _runQuery(
         "INSERT INTO registry (name, creation_date, modification_date) VALUES ($name, DATETIME('now'), DATETIME('now'))",
         {$name: name}
+    ).then(function (stmt) {
+        return stmt.lastID;
+    });
+};
+
+var insertRow = function (row)
+{
+    return _runQuery(
+        "INSERT INTO row (registry_id, product, quantity, amount, creation_date) VALUES ($registryId, $product, $quantity, $amount, STRFTIME('%Y-%m-%d %H:%M:%f', 'now'));",
+        {$registryId: row.registryId, $product: row.product, $quantity: row.quantity, $amount: row.amount}
     ).then(function (stmt) {
         return stmt.lastID;
     });
@@ -107,6 +126,8 @@ var _toPromiseWhenOpen = function (func)
 export {
     open,
     getRegistries,
+    getRegistryRows,
     insertRegistry,
+    insertRow,
     close
 };
