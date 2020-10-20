@@ -57,7 +57,7 @@ var createTableRow = function (reportRow)
     td.textContent = reportRow.totalQuantity;
     tr.appendChild(td);
     td = document.createElement('td');
-    td.textContent = reportRow.totalAmount + ' €';
+    td.textContent = reportRow.totalAmount.toFixed(2) + ' €';
     tr.appendChild(td);
     tbody.appendChild(tr);
 };

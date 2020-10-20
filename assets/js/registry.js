@@ -65,7 +65,7 @@ var createTableRow = function (registryRow, pos)
     td.textContent = registryRow.quantity;
     tr.appendChild(td);
     td = document.createElement('td');
-    td.textContent = registryRow.amount + ' €';
+    td.textContent = registryRow.amount.toFixed(2) + ' €';
     tr.appendChild(td);
     td = document.createElement('td');
     tr.appendChild(td);
