@@ -46,7 +46,8 @@ var reloadTable = function ()
 var createTableRow = function (reportRow)
 {
     var tr = document.createElement('tr');
-    var td = document.createElement('td', {scope: 'row'});
+    var td = document.createElement('td');
+    td.scope = 'row';
     td.textContent = reportRow.product;
     tr.appendChild(td);
     td = document.createElement('td');

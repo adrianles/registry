@@ -57,7 +57,8 @@ var reloadTable = function ()
 var createTableRow = function (registryRow, pos)
 {
     var tr = document.createElement('tr');
-    var td = document.createElement('td', {scope: 'row'});
+    var td = document.createElement('td');
+    td.scope = 'row';
     td.textContent = registryRow.product;
     tr.appendChild(td);
     td = document.createElement('td');

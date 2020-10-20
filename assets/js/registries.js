@@ -8,6 +8,7 @@ import { transitionTo as transitionToView } from './view-transition.js';
 import { showView as showRegistryView } from './registry.js';
 
 const viewId = 'view-registries';
+const htmlClassClickable = 'clickable';
 
 var tbody = document.getElementById('data-registries');
 var button = document.getElementById('insertRegistryButton');
@@ -35,7 +36,8 @@ var reloadTable = function ()
 var createTableRow = function (registry)
 {
     var tr = document.createElement('tr');
-    var td = document.createElement('td', {scope: 'row'});
+    var td = document.createElement('td');
+    td.scope = 'row';
     td.textContent = registry.id;
     tr.appendChild(td);
     td = document.createElement('td');
@@ -47,6 +49,7 @@ var createTableRow = function (registry)
     td = document.createElement('td');
     td.textContent = registry.modificationDate;
     tr.appendChild(td);
+    tr.classList.add('clickable');
     tr.addEventListener('click', function (event) {
         onTableRowClickEvent(event, registry.id);
     });
