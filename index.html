@@ -10,6 +10,7 @@
     </head>
     <body>
         <div id="view-loading" class="container view active-view"></div>
+
         <div id="view-registries" class="container view">
             <div class="menu">
                 <span class="menu-item current-location" data-r-target="registries" data-r-i18n>Registries</span>
@@ -57,18 +58,21 @@
                         <label for="insertRowProductInput" class="col col-form-label" data-r-i18n>Product</label>
                         <div class="col-auto">
                             <input id="insertRowProductInput" class="form-control" type="text" maxlength="10" />
+                            <div class="invalid-feedback" data-r-i18n>The product should have 10 characters</div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="insertRowQuantityInput" class="col col-form-label" data-r-i18n>Quantity</label>
                         <div class="col-auto">
-                            <input id="insertRowQuantityInput" class="form-control" type="number" min="0" />
+                            <input id="insertRowQuantityInput" class="form-control" type="number" pattern="[0-9]" />
+                            <div class="invalid-feedback" data-r-i18n>The quantity should be an integer greater than 0</div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="insertRowAmountInput" class="col col-form-label" data-r-i18n>Amount</label>
                         <div class="col-auto">
-                            <input id="insertRowAmountInput" class="form-control" type="number" min="0" />
+                            <input id="insertRowAmountInput" class="form-control" type="number" pattern="[0-9]" />
+                            <div class="invalid-feedback" data-r-i18n>The amount should be greater than 0</div>
                         </div>
                     </div>
                     <div class="row">
