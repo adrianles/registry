@@ -1,0 +1,7 @@
+var translations = {
+
+};
+
+export {
+    translations
+};

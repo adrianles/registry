@@ -6,31 +6,31 @@
         <link rel="stylesheet" href="./assets/css/bootstrap-4.5.3.min.css" />
         <link rel="stylesheet" href="./assets/css/base.css" />
 
-        <title data-r-i18n>Registries</title>
+        <title data-r-i18n="Registries">Registries</title>
     </head>
     <body>
         <div id="view-loading" class="container view active-view"></div>
 
         <div id="view-registries" class="container view">
             <div class="menu">
-                <span class="menu-item current-location" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-item current-location" data-r-target="registries" data-r-i18n="Registries">Registries</span>
                 <span class="menu-separator"> ></span>
             </div>
-            <h1 data-r-i18n>Registries</h1>
+            <h1 data-r-i18n="Registries">Registries</h1>
             <div class="container">
                 <div class="form-group row">
-                    <div class="col-auto"><label for="insertRegistryInput">New registry</label></div>
+                    <div class="col-auto"><label for="insertRegistryInput" data-r-i18n="New registry">New registry</label></div>
                     <div class="col-auto"><input id="insertRegistryInput" class="form-control" type="text" maxlength="100" /></div>
-                    <div class="col-auto"><button id="insertRegistryButton" class="btn btn-primary">Add</button></div>
+                    <div class="col-auto"><button id="insertRegistryButton" class="btn btn-primary" data-r-i18n="Add">Add</button></div>
                 </div>
             </div>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" data-r-i18n>Registry ID</th>
-                        <th scope="col" data-r-i18n>Name</th>
-                        <th scope="col" data-r-i18n>Creation</th>
-                        <th scope="col" data-r-i18n>Last modified</th>
+                        <th scope="col" data-r-i18n="Registry ID">Registry ID</th>
+                        <th scope="col" data-r-i18n="Name">Name</th>
+                        <th scope="col" data-r-i18n="Creation">Creation</th>
+                        <th scope="col" data-r-i18n="Last modified">Last modified</th>
                     </tr>
                 </thead>
                 <tbody id="data-registries">
@@ -40,52 +40,52 @@
 
         <div id="view-registry" class="container view">
             <div class="menu">
-                <span class="menu-item" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-item" data-r-target="registries" data-r-i18n="Registries">Registries</span>
                 <span class="menu-separator"> > </span>
-                <span class="menu-item current-location" data-r-target="registry" data-r-i18n>Registry</span>
+                <span class="menu-item current-location" data-r-target="registry" data-r-i18n="Registry">Registry</span>
                 <span class="menu-separator"> ></span>
             </div>
             <div class="row">
-                <h1 class="col-auto" data-r-i18n>Registry</h1>
+                <h1 class="col-auto" data-r-i18n="Registry">Registry</h1>
                 <div class="col align-middle">
-                    <button id="viewRegistryReport" class="btn btn-info float-right" data-r-i18n>View report</button>
+                    <button id="viewRegistryReport" class="btn btn-info float-right" data-r-i18n="View report">View report</button>
                 </div>
             </div>
             <div class="container row">
-                <div class="col-auto"><span data-r-i18n>New row</span></div>
+                <div class="col-auto"><span data-r-i18n="New row">New row</span></div>
                 <div class="col-auto border-left">
                     <div class="form-group row">
-                        <label for="insertRowProductInput" class="col col-form-label" data-r-i18n>Product</label>
+                        <label for="insertRowProductInput" class="col col-form-label" data-r-i18n="Product">Product</label>
                         <div class="col-auto">
                             <input id="insertRowProductInput" class="form-control" type="text" maxlength="10" />
-                            <div class="invalid-feedback" data-r-i18n>The product should have 10 characters</div>
+                            <div class="invalid-feedback" data-r-i18n="The product should have 10 characters">The product should have 10 characters</div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="insertRowQuantityInput" class="col col-form-label" data-r-i18n>Quantity</label>
+                        <label for="insertRowQuantityInput" class="col col-form-label" data-r-i18n="Quantity">Quantity</label>
                         <div class="col-auto">
                             <input id="insertRowQuantityInput" class="form-control" type="number" pattern="[0-9]" />
-                            <div class="invalid-feedback" data-r-i18n>The quantity should be an integer greater than 0</div>
+                            <div class="invalid-feedback" data-r-i18n="The quantity should be an integer greater than 0">The quantity should be an integer greater than 0</div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="insertRowAmountInput" class="col col-form-label" data-r-i18n>Amount</label>
+                        <label for="insertRowAmountInput" class="col col-form-label" data-r-i18n="Amount">Amount</label>
                         <div class="col-auto">
                             <input id="insertRowAmountInput" class="form-control" type="number" pattern="[0-9]" />
-                            <div class="invalid-feedback" data-r-i18n>The amount should be greater than 0</div>
+                            <div class="invalid-feedback" data-r-i18n="The amount should be greater than 0">The amount should be greater than 0</div>
                         </div>
                     </div>
                     <div class="row">
-                        <button id="insertRowButton" class="col-auto btn btn-primary ml-3">Add</button>
+                        <button id="insertRowButton" class="col-auto btn btn-primary ml-3" data-r-i18n="Add">Add</button>
                     </div>
                 </div>
             </div>
             <table class="table table-bordered table-hover mt-4">
                 <thead>
                     <tr>
-                        <th scope="col" data-r-i18n>Product</th>
-                        <th scope="col" data-r-i18n>Quantity</th>
-                        <th scope="col" data-r-i18n>Amount</th>
+                        <th scope="col" data-r-i18n="Product">Product</th>
+                        <th scope="col" data-r-i18n="Quantity">Quantity</th>
+                        <th scope="col" data-r-i18n="Amount">Amount</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -96,23 +96,23 @@
 
         <div id="view-report" class="container view">
             <div class="menu">
-                <span class="menu-item" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-item" data-r-target="registries" data-r-i18n="Registries">Registries</span>
                 <span class="menu-separator"> > </span>
-                <span class="menu-item" data-r-target="registry" data-r-i18n>Registry</span>
+                <span class="menu-item" data-r-target="registry" data-r-i18n="Registry">Registry</span>
                 <span class="menu-separator"> > </span>
-                <span class="menu-item current-location" data-r-target="report" data-r-i18n>Report</span>
+                <span class="menu-item current-location" data-r-target="report" data-r-i18n="Report">Report</span>
                 <span class="menu-separator"> ></span>
             </div>
             <div class="row">
-                <h1 class="col-auto" data-r-i18n>Report</h1>
+                <h1 class="col-auto" data-r-i18n="Report">Report</h1>
             </div>
             <table class="table table-bordered table-striped mt-4">
                 <thead>
                     <tr>
-                        <th scope="col" data-r-i18n>Product</th>
-                        <th scope="col" data-r-i18n>Number of rows</th>
-                        <th scope="col" data-r-i18n>Total quantity</th>
-                        <th scope="col" data-r-i18n>Total amount</th>
+                        <th scope="col" data-r-i18n="Product">Product</th>
+                        <th scope="col" data-r-i18n="Number of rows">Number of rows</th>
+                        <th scope="col" data-r-i18n="Total quantity">Total quantity</th>
+                        <th scope="col" data-r-i18n="Total amount">Total amount</th>
                     </tr>
                 </thead>
                 <tbody id="data-report-rows">
