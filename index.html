@@ -44,7 +44,12 @@
                 <span class="menu-item current-location" data-r-target="registry" data-r-i18n>Registry</span>
                 <span class="menu-separator"> ></span>
             </div>
-            <h1 data-r-i18n>Registry</h1>
+            <div class="row">
+                <h1 class="col-auto" data-r-i18n>Registry</h1>
+                <div class="col align-middle">
+                    <button id="viewRegistryReport" class="btn btn-info float-right" data-r-i18n>View report</button>
+                </div>
+            </div>
             <div class="container row">
                 <div class="col-auto"><span data-r-i18n>New row</span></div>
                 <div class="col-auto border-left">
@@ -81,6 +86,32 @@
                     </tr>
                 </thead>
                 <tbody id="data-rows">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="view-report" class="container view">
+            <div class="menu">
+                <span class="menu-item" data-r-target="registries" data-r-i18n>Registries</span>
+                <span class="menu-separator"> > </span>
+                <span class="menu-item" data-r-target="registry" data-r-i18n>Registry</span>
+                <span class="menu-separator"> > </span>
+                <span class="menu-item current-location" data-r-target="report" data-r-i18n>Report</span>
+                <span class="menu-separator"> ></span>
+            </div>
+            <div class="row">
+                <h1 class="col-auto" data-r-i18n>Report</h1>
+            </div>
+            <table class="table table-bordered table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col" data-r-i18n>Product</th>
+                        <th scope="col" data-r-i18n>Number of rows</th>
+                        <th scope="col" data-r-i18n>Total quantity</th>
+                        <th scope="col" data-r-i18n>Total amount</th>
+                    </tr>
+                </thead>
+                <tbody id="data-report-rows">
                 </tbody>
             </table>
         </div>

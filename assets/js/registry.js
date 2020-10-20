@@ -6,21 +6,26 @@ import {
 } from './database.js';
 import { transitionTo as transitionToView } from './view-transition.js';
 import { showView as showRegistriesView } from './registries.js';
+import { showView as showReportView } from './report.js';
 
 const viewId = 'view-registry';
 
+var currentRegistryId = null;
 var registriesMenuItem = document.getElementById(viewId).querySelector('.menu-item[data-r-target="registries"]');
 registriesMenuItem.addEventListener('click', function (event) {
     showRegistriesView();
 });
 
 var tbody = document.getElementById('data-rows');
-var button = document.getElementById('insertRowButton');
+var viewReportButton = document.getElementById('viewRegistryReport');
+viewReportButton.addEventListener('click', function (event) {
+    showReportView(currentRegistryId);
+});
+var addRowButton = document.getElementById('insertRowButton');
 var productInput = document.getElementById('insertRowProductInput');
 var quantityInput = document.getElementById('insertRowQuantityInput');
 var amountInput = document.getElementById('insertRowAmountInput');
-var currentRegistryId = null;
-button.addEventListener('click', function (event) {
+addRowButton.addEventListener('click', function (event) {
     var row = {
         registryId: currentRegistryId,
         product: productInput.value,
