@@ -68,7 +68,10 @@ var insertRow = function (row)
         "INSERT INTO row (registry_id, product, quantity, amount, creation_date) VALUES ($registryId, $product, $quantity, $amount, STRFTIME('%Y-%m-%d %H:%M:%f', 'now'));",
         {$registryId: row.registryId, $product: row.product, $quantity: row.quantity, $amount: row.amount}
     ).then(function (stmt) {
-        return stmt.lastID;
+        var newRowId = stmt.lastID;
+        return _updateRegistryModificationDate(row.registryId).then(function () {
+            return newRowId;
+        });
     });
 };
 
@@ -121,6 +124,14 @@ var _toPromiseWhenOpen = function (func)
             func(resolve, reject);
         }
     });
+};
+
+var _updateRegistryModificationDate = function (registryId)
+{
+    return _runQuery(
+        "UPDATE registry SET modification_date = DATETIME('now') WHERE id = $registryId",
+        {$registryId: registryId}
+    );
 };
 
 export {
