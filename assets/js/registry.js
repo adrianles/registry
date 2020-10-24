@@ -1,15 +1,19 @@
 console.debug('module registry.js is loading')
 
 import {
+    deleteRow as dbDeleteRow,
     getRegistryRows as dbGetRegistryRows,
     insertRow as dbInsertRow
 } from './database.js';
 import { transitionTo as transitionToView } from './view-transition.js';
 import { showView as showRegistriesView } from './registries.js';
 import { showView as showReportView } from './report.js';
+import { translate } from './i18n.js';
 
 const viewId = 'view-registry';
 const htmlClassInvalidControl = 'is-invalid';
+const htmlClassIcon = 'icon';
+const htmlClassClickable = 'clickable';
 
 var currentRegistryId = null;
 var registriesMenuItem = document.getElementById(viewId).querySelector('.menu-item[data-r-target="registries"]');
@@ -36,6 +40,8 @@ addRowButton.addEventListener('click', function (event) {
     }
 });
 
+var deleteLock = false;
+
 var createTableRow = function (registryRow, pos)
 {
     var tr = document.createElement('tr');
@@ -50,6 +56,23 @@ var createTableRow = function (registryRow, pos)
     td.textContent = registryRow.amount.toFixed(2) + ' €';
     tr.appendChild(td);
     td = document.createElement('td');
+    td.classList.add('col-auto');
+    var icon = document.createElement('img');
+    icon.classList.add(htmlClassIcon);
+    icon.classList.add(htmlClassClickable);
+    icon.setAttribute('src', 'assets/img/rubbish-bin.png');
+    icon.addEventListener('click', function (event) {
+        if (!deleteLock) {
+            if (confirm(translate('Are you sure you want to delete this row?'))) {
+                deleteLock = true;
+                dbDeleteRow(registryRow.id).then(function () {
+                    tbody.removeChild(tr);
+                    deleteLock = false;
+                });
+            }
+        }
+    });
+    td.appendChild(icon);
     tr.appendChild(td);
     tbody.appendChild(tr);
 };

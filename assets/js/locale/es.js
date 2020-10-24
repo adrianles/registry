@@ -1,4 +1,5 @@
 var translations = {
+    "Are you sure you want to delete this row?": "Seguro que quiere eliminar esta fila?",
     "Add": "Añadir",
     "Amount": "Importe",
     "Creation": "Creación",

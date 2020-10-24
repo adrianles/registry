@@ -49,7 +49,7 @@ var createTableRow = function (registry)
     td = document.createElement('td');
     td.textContent = registry.modificationDate;
     tr.appendChild(td);
-    tr.classList.add('clickable');
+    tr.classList.add(htmlClassClickable);
     tr.addEventListener('click', function (event) {
         onTableRowClickEvent(event, registry.id);
     });

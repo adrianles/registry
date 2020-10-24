@@ -35,6 +35,29 @@ var close = function ()
     });
 };
 
+var deleteRow = function (rowId)
+{
+    return getRegistryRow(rowId).then(function (row) {
+        return _runQuery("DELETE FROM row WHERE id = $rowId", {$rowId: rowId}).then(function (stmt) {
+            return _updateRegistryModificationDate(row.registryId).then(function () {});
+        });
+    });
+};
+
+var _getQuery = function (query, params)
+{
+    params = params || [];
+    return _toPromiseWhenOpen(function (resolve, reject) {
+        db.get(query, params, function (error, row) {
+            if (null === error) {
+                resolve(row);
+            } else {
+                reject(error);
+            }
+        });
+    });
+};
+
 var getRegistries = function (isAsc)
 {
     var order = isAsc ? 'ASC' : 'DESC';
@@ -43,11 +66,21 @@ var getRegistries = function (isAsc)
     );
 };
 
+var _selectRowFields = "id, registry_id AS registryId, product, quantity, amount, DATETIME(creation_date, 'localtime') as creationDate";
+
+var getRegistryRow = function (rowId)
+{
+    return _getQuery(
+        'SELECT ' + _selectRowFields + ' FROM row WHERE id = $rowId',
+        {$rowId: rowId}
+    );
+};
+
 var getRegistryRows = function (registryId, isAsc)
 {
     var order = isAsc ? 'ASC' : 'DESC';
     return _allQuery(
-        "SELECT id, registry_id AS registryId, product, quantity, amount, DATETIME(creation_date, 'localtime') as creationDate FROM row WHERE registry_id = $registryId ORDER BY creation_date " + order,
+        'SELECT ' + _selectRowFields + ' FROM row WHERE registry_id = $registryId ORDER BY creation_date ' + order,
         {$registryId: registryId}
     );
 };
@@ -135,10 +168,12 @@ var _updateRegistryModificationDate = function (registryId)
 };
 
 export {
-    open,
+    deleteRow,
     getRegistries,
+    getRegistryRow,
     getRegistryRows,
     insertRegistry,
     insertRow,
+    open,
     close
 };

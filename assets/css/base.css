@@ -22,3 +22,12 @@ input::-webkit-inner-spin-button {
 .clickable {
     cursor: pointer;
 }
+
+table th.col-auto,
+table td.col-auto {
+    width: 1px;
+}
+
+#view-registry table .icon {
+    width: 25px;
+}
