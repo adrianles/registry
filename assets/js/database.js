@@ -35,6 +35,20 @@ var close = function ()
     });
 };
 
+var deleteRegistry = function (registryId)
+{
+    return _deleteRegistryRows(registryId).then(function () {
+        return _runQuery("DELETE FROM registry WHERE id = $registryId", {$registryId: registryId}).then(function (stmt) {});
+    });
+};
+
+var _deleteRegistryRows = function (registryId)
+{
+    return _runQuery("DELETE FROM row WHERE registry_id = $registryId", {$registryId: registryId}).then(function (stmt) {
+        return _updateRegistryModificationDate(registryId).then(function () {});
+    });
+};
+
 var deleteRow = function (rowId)
 {
     return getRegistryRow(rowId).then(function (row) {
@@ -168,6 +182,7 @@ var _updateRegistryModificationDate = function (registryId)
 };
 
 export {
+    deleteRegistry,
     deleteRow,
     getRegistries,
     getRegistryRow,
