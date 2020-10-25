@@ -14,6 +14,7 @@ const viewId = 'view-registry';
 const htmlClassInvalidControl = 'is-invalid';
 const htmlClassIcon = 'icon';
 const htmlClassClickable = 'clickable';
+const keyEnterCode = 13;
 
 var currentRegistryId = null;
 var registriesMenuItem = document.getElementById(viewId).querySelector('.menu-item[data-r-target="registries"]');
@@ -37,6 +38,21 @@ addRowButton.addEventListener('click', function (event) {
             reloadTable();
             initializeForm();
         });
+    }
+});
+productInput.addEventListener('keydown', function (event) {
+    if (event.keyCode === keyEnterCode) {
+        quantityInput.focus();
+    }
+});
+quantityInput.addEventListener('keydown', function (event) {
+    if (event.keyCode === keyEnterCode) {
+        amountInput.focus();
+    }
+});
+amountInput.addEventListener('keydown', function (event) {
+    if (event.keyCode === keyEnterCode) {
+        addRowButton.click();
     }
 });
 
