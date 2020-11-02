@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
-const sqlite = require('sqlite3').verbose()
+const sqlite = require('sqlite3')
 const dbName = 'registry.db'
 const dbVersion = '2'
 
@@ -24,29 +24,35 @@ function createWindow () {
 }
 
 function initializeDb () {
-  var db = new sqlite.Database(dbName, sqlite.OPEN_READONLY, function (error) {
-    if (null === error) {
-      var versionError = false;
-      db.get('SELECT version FROM metadata', [], function(error, row) {
-        db.close()
-        var version = row['version']
-        if (version !== dbVersion) throwError('Unexpected database version. Expected ' + dbVersion + ' but ' + JSON.stringify(version) + ' was found')
-      });
-    } else {
-      db = new sqlite.Database(dbName, (sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE), function (error) {
-        if (null === error) {
-          db.exec(
-            'CREATE TABLE metadata (version TEXT(15) NOT NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
-            "INSERT INTO metadata (version, creation_date, modification_date) VALUES ('" + dbVersion + "', DATETIME('now'), DATETIME('now'));" +
-            'CREATE TABLE registry (id INTEGER PRIMARY KEY, name TEXT(100) NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
-            'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(100) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);'
-          );
+  return new Promise(function (resolve, reject) {
+    var db = new sqlite.Database(dbName, sqlite.OPEN_READONLY, function (error) {
+      if (null === error) {
+        db.get('SELECT version FROM metadata', [], function(error, row) {
           db.close()
-        } else {
-          throwError('Cannot create database: ' + JSON.stringify(error))
-        }
-      })
-    }
+          var version = row['version']
+          if (version !== dbVersion) {
+            reject('Unexpected database version. Expected ' + dbVersion + ' but ' + JSON.stringify(version) + ' was found')
+          } else {
+            resolve()
+          }
+        })
+      } else {
+        db = new sqlite.Database(dbName, (sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE), function (error) {
+          if (null === error) {
+            db.exec(
+              'CREATE TABLE metadata (version TEXT(15) NOT NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
+              "INSERT INTO metadata (version, creation_date, modification_date) VALUES ('" + dbVersion + "', DATETIME('now'), DATETIME('now'));" +
+              'CREATE TABLE registry (id INTEGER PRIMARY KEY, name TEXT(100) NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
+              'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(100) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);'
+            )
+            db.close()
+            resolve()
+          } else {
+            reject('Cannot create database: ' + JSON.stringify(error))
+          }
+        })
+      }
+    })
   })
 }
 
@@ -59,15 +65,15 @@ function throwError (message) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  initializeDb()
+  initializeDb().then(() => {
+    createWindow()
 
-  createWindow()
-
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+    app.on('activate', function () {
+      // On macOS it's common to re-create a window in the app when the
+      // dock icon is clicked and there are no other windows open.
+      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+  }, throwError)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
