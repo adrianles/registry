@@ -19,6 +19,25 @@ registryMenuItem.addEventListener('click', function (event) {
 
 var tbody = document.getElementById('data-report-rows');
 
+var createTableRow = function (reportRow)
+{
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.scope = 'row';
+    td.textContent = reportRow.product;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.textContent = reportRow.appearances;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.textContent = reportRow.totalQuantity;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.textContent = reportRow.totalAmount.toFixed(2) + ' €';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+};
+
 var reloadTable = function ()
 {
     dbGetRegistryRows(currentRegistryId).then(function (rows) {
@@ -39,27 +58,23 @@ var reloadTable = function ()
             reportRows[rows[i].product].totalQuantity += rows[i].quantity;
             reportRows[rows[i].product].totalAmount += rows[i].amount;
         }
-        Object.values(reportRows).forEach(createTableRow);
+
+        Object.values(reportRows)
+            .sort(rowCompareTo)
+            .forEach(createTableRow);
     });
 };
 
-var createTableRow = function (reportRow)
+var rowCompareTo = function (a, b)
 {
-    var tr = document.createElement('tr');
-    var td = document.createElement('td');
-    td.scope = 'row';
-    td.textContent = reportRow.product;
-    tr.appendChild(td);
-    td = document.createElement('td');
-    td.textContent = reportRow.appearances;
-    tr.appendChild(td);
-    td = document.createElement('td');
-    td.textContent = reportRow.totalQuantity;
-    tr.appendChild(td);
-    td = document.createElement('td');
-    td.textContent = reportRow.totalAmount.toFixed(2) + ' €';
-    tr.appendChild(td);
-    tbody.appendChild(tr);
+    if (a.product.normalize() === b.product.normalize()) {
+        return 0;
+    }
+    if (a.product.normalize() > b.product.normalize()) {
+        return 1;
+    } else {
+        return -1;
+    }
 };
 
 var showView = function (registryId)
