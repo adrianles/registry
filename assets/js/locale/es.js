@@ -15,7 +15,7 @@ var translations = {
     "Registry": "Registro",
     "Report": "Informe",
     "The amount should be greater than 0": "El importe debe ser mayor que 0",
-    "The product should have 10 characters": "El producto debe tener 10 carácteres",
+    "The product should not be empty": "El producto no debe ser vacío",
     "The quantity should be an integer greater than 0": "La cantidad debe ser un número entero mayor que 0",
     "Total amount": "Importe total",
     "Total quantity": "Cantidad total",

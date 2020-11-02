@@ -143,7 +143,7 @@ var validateForm = function ()
         amount: Number(amountInput.value)
     }
     var error = false;
-    if (row.product.length !== 10) {
+    if (!(row.product.length > 0 || row.product.length <= 100)) {
         productInput.classList.add(htmlClassInvalidControl);
         if (!error) {
             productInput.focus();

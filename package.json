@@ -1,6 +1,6 @@
 {
   "name": "ales-registry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Registry app",
   "main": "main.js",
   "scripts": {

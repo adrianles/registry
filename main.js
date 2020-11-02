@@ -3,7 +3,7 @@ const {app, BrowserWindow, dialog} = require('electron')
 const path = require('path')
 const sqlite = require('sqlite3').verbose()
 const dbName = 'registry.db'
-const dbVersion = '1'
+const dbVersion = '2'
 
 function createWindow () {
   // Create the browser window.
@@ -39,7 +39,7 @@ function initializeDb () {
             'CREATE TABLE metadata (version TEXT(15) NOT NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
             "INSERT INTO metadata (version, creation_date, modification_date) VALUES ('" + dbVersion + "', DATETIME('now'), DATETIME('now'));" +
             'CREATE TABLE registry (id INTEGER PRIMARY KEY, name TEXT(100) NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
-            'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(10) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);'
+            'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(100) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);'
           );
           db.close()
         } else {
