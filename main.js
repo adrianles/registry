@@ -28,13 +28,14 @@ function initializeDb () {
     var db = new sqlite.Database(dbName, sqlite.OPEN_READONLY, function (error) {
       if (null === error) {
         db.get('SELECT version FROM metadata', [], function(error, row) {
-          db.close()
           var version = row['version']
-          if (version !== dbVersion) {
-            reject('Unexpected database version. Expected ' + dbVersion + ' but ' + JSON.stringify(version) + ' was found')
-          } else {
-            resolve()
-          }
+          db.close(function (error) {
+            if (version !== dbVersion) {
+              reject('Unexpected database version. Expected ' + dbVersion + ' but ' + JSON.stringify(version) + ' was found')
+            } else {
+              resolve()
+            }
+          })
         })
       } else {
         db = new sqlite.Database(dbName, (sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE), function (error) {
@@ -43,10 +44,18 @@ function initializeDb () {
               'CREATE TABLE metadata (version TEXT(15) NOT NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
               "INSERT INTO metadata (version, creation_date, modification_date) VALUES ('" + dbVersion + "', DATETIME('now'), DATETIME('now'));" +
               'CREATE TABLE registry (id INTEGER PRIMARY KEY, name TEXT(100) NULL, creation_date TEXT(19) NOT NULL, modification_date TEXT(19) NOT NULL);' +
-              'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(100) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);'
+              'CREATE TABLE row (id INTEGER PRIMARY KEY, registry_id INTEGER NOT NULL, product TEXT(100) NOT NULL, quantity INTEGER NOT NULL, amount REAL NOT NULL, creation_date TEXT(23) NOT NULL);',
+              function (error) {
+                var initializationError = error;
+                db.close(function (error) {
+                  if (null === initializationError) {
+                    resolve()
+                  } else {
+                    reject('Cannot initialize database: ' + JSON.stringify(initializationError))
+                  }
+                })
+              }
             )
-            db.close()
-            resolve()
           } else {
             reject('Cannot create database: ' + JSON.stringify(error))
           }
